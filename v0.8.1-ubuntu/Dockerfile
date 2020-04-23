@@ -12,10 +12,15 @@ RUN apt update && apt-get install -y build-essential libtool autotools-dev autom
 RUN apt-get install -y openssl libssl-dev
 RUN apt-get install -y libevent-dev
 
+# clone omnicore
 RUN git clone -b v0.8.1 https://github.com/OmniLayer/omnicore.git $BITCOIN_REPO
+# COPY omnicore $BITCOIN_REPO
 
+# db
 RUN  wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz' && \
     echo '12edc0df75bf9abd7f82f821795bcee50f42cb2e5f76a6a281b85732798364ef  db-4.8.30.NC.tar.gz' | sha256sum -c
+# COPY ./db-4.8.30.NC.tar.gz ./db-4.8.30.NC.tar.gz
+
 RUN tar -xzf db-4.8.30.NC.tar.gz
 RUN cd db-4.8.30.NC/build_unix/ && \
     ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$BDB_PREFIX && \
